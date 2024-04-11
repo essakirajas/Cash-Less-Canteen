@@ -1,0 +1,243 @@
+<?php
+require 'database.php';
+
+$id = $roll = $error = "";
+$name = $gender = $email = $mobile = $balance = $add_amount = "";
+$successMessage = ""; // Initialize success message
+
+if (!empty($_POST)) {
+    $id = isset($_POST['id']) ? $_POST['id'] : "";
+    $roll = isset($_POST['roll']) ? $_POST['roll'] : "";
+    $add_amount = isset($_POST['add_amount']) ? floatval($_POST['add_amount']) : 0; // Get the additional amount as a float
+
+    if (!empty($id) || !empty($roll)) {
+        $pdo = Database::connect();
+        $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+
+        try {
+            if (!empty($id)) {
+                $sql = "SELECT t.id, t.roll, t.name, t.gender, t.email, t.mobile, b.balance
+                        FROM table_the_iot_projects t
+                        LEFT JOIN balance_amount b ON t.id = b.id
+                        WHERE t.id = ?";
+                $params = array($id);
+            } elseif (!empty($roll)) {
+                $sql = "SELECT t.id, t.roll, t.name, t.gender, t.email, t.mobile, b.balance
+                        FROM table_the_iot_projects t
+                        LEFT JOIN balance_amount b ON t.id = b.id
+                        WHERE t.roll = ?";
+                $params = array($roll);
+            }
+
+            $q = $pdo->prepare($sql);
+            $q->execute($params);
+
+            if ($q->rowCount() > 0) {
+                $row = $q->fetch(PDO::FETCH_ASSOC);
+                $id = $row['id'];
+                $roll = $row['roll'];
+                $name = $row['name'];
+                $gender = $row['gender'];
+                $email = $row['email'];
+                $mobile = $row['mobile'];
+                $balance = $row['balance'];
+
+                $successMessage = "Balance updated successfully.";
+            } else {
+                $error = "No user found with the provided ID or Name.";
+            }
+        } catch (PDOException $e) {
+            $error = "Database error: " . $e->getMessage();
+        }
+
+        Database::disconnect();
+    } else {
+        $error = "Please enter ID or Name to fetch user details.";
+    }
+}
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+		<meta charset="utf-8">
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<script src="js/bootstrap.min.js"></script>
+		<style>
+		html {
+			font-family: Arial;
+			display: inline-block;
+			margin: 0px auto;
+			text-align: center;
+		}
+
+		ul.topnav {
+			list-style-type: none;
+			margin: auto;
+			padding: 0;
+			overflow: hidden;
+			background-color: #4CAF50;
+			width: 70%;
+		}
+
+		ul.topnav li {float: left;}
+
+		ul.topnav li a {
+			display: block;
+			color: white;
+			text-align: center;
+			padding: 14px 16px;
+			text-decoration: none;
+		}
+
+		ul.topnav li a:hover:not(.active) {background-color: #3e8e41;}
+
+		ul.topnav li a.active {background-color: #333;}
+
+		ul.topnav li.right {float: right;}
+
+		@media screen and (max-width: 600px) {
+			ul.topnav li.right, 
+			ul.topnav li {float: none;}
+		}
+		
+		img {
+			display: block;
+			margin-left: auto;
+			margin-right: auto;
+		}
+		</style>
+		
+		<title>Cashless Canteen</title>
+	</head>
+	
+	<body>
+		<h2>Cashless Canteen</h2>
+		<ul class="topnav">
+			<li><a class="active" href="home.php">Home</a></li>
+			<li><a href="user data.php">User Data</a></li>
+			<li><a href="registration.php">Registration</a></li>
+			<li><a href="read tag.php">Read Tag ID</a></li>
+			<li><a href="deposit.php">deposit</a></li>
+		</ul>
+		<br>
+		<h3>Cashless Canteen</h3>
+
+    <div class="container">
+        <br>
+        <div class="center" style="margin: 0 auto; width:495px; border-style: solid; border-color: #f2f2f2;">
+            <div class="row">
+                <h3 align="center">User Details</h3>
+            </div>
+            <br>
+            <form class="form-horizontal" method="post">
+                <div class="control-group">
+                    <label class="control-label">ID</label>
+                    <div class="controls">
+                        <input name="id" type="text" placeholder="Enter ID" value="<?php echo $id; ?>">
+                    </div>
+                </div>
+                
+                <div class="control-group">
+                        <label class="control-label">Roll Number</label>
+                        <div class="controls">
+                            <input name="roll" type="text" value="<?php echo $roll; ?>">
+                        </div>
+                    </div>
+
+                <!-- Add additional fields here -->
+                
+
+                <div class="form-actions">
+                    <button type="submit" class="btn btn-success" name="update">Fetch Details</button>
+                </div>
+            </form>
+
+    <div class="container">
+        <div class="menu">
+            <h2>Menu</h2>
+            <ul id="menu-list">
+                <li data-item="Burger" data-price="5">Burger - Rs 5</li>
+                <li data-item="Pizza" data-price="10">Pizza - Rs 10</li>
+                <li data-item="Fries" data-price="20">Fries - Rs 20</li>
+                <li data-item="Salad" data-price="50">Salad - Rs 50</li>
+                <li data-item="Sandwich" data-price="100">Sandwich - Rs 100</li>
+                <!-- Add more menu items as needed -->
+            </ul>
+        </div>
+        <div class="order">
+            <h2>Your Order</h2>
+            <ul id="order-list">
+                <!-- Selected items will be displayed here -->
+            </ul>
+            <p>Total: Rs <span id="total-amount">0</span></p>
+            <button id="checkout">Checkout</button>
+        </div>
+        <div class="receipt">
+            <h2>Receipt</h2>
+            <ul id="receipt">
+                <!-- Order details will be displayed here -->
+            </ul>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const menuList = document.getElementById('menu-list');
+            const orderList = document.getElementById('order-list');
+            const totalAmount = document.getElementById('total-amount');
+            const checkoutBtn = document.getElementById('checkout');
+            const receiptList = document.getElementById('receipt');
+
+            let order = [];
+            let total = 0;
+
+            menuList.addEventListener('click', (e) => {
+                if (e.target.tagName === 'LI') {
+                    const item = e.target.getAttribute('data-item');
+                    const price = parseFloat(e.target.getAttribute('data-price'));
+
+                    order.push({ item, price });
+                    total += price;
+
+                    updateOrderList();
+                }
+            });
+
+            function updateOrderList() {
+                orderList.innerHTML = '';
+                order.forEach((item) => {
+                    const listItem = document.createElement('li');
+                    listItem.textContent = `${item.item} - Rs ${item.price}`;
+                    orderList.appendChild(listItem);
+                });
+                totalAmount.textContent = total;
+            }
+
+            checkoutBtn.addEventListener('click', () => {
+                // Prepare the receipt content
+                const dateTime = new Date().toLocaleString();
+                const totalAmountRs = total;
+                const orderDetails = order.map(item => item.item).join(', ');
+
+                // Display the receipt
+                const receiptContent = `
+                    <li>Date & Time: ${dateTime}</li>
+                    <li>Total Amount: Rs ${totalAmountRs}</li>
+                    <li>Order Details: ${orderDetails}</li>
+                `;
+                receiptList.innerHTML = receiptContent;
+
+                resetOrder();
+            });
+
+            function resetOrder() {
+                order = [];
+                total = 0;
+                updateOrderList();
+            }
+        });
+    </script>
+</body>
+</html>
