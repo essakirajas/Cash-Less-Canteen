@@ -181,23 +181,23 @@ CREATE TABLE `table_the_iot_projects` (
 --
 
 INSERT INTO `table_the_iot_projects` (`name`, `id`, `gender`, `email`, `mobile`, `roll`) VALUES
-('essaki', '-', 'Male', 'essakiraja246810@gmail.com', 'asc', ''),
-('essaki', '1', 'Male', 'essakiraja246810@gmail.com', 'asc', ''),
-('essakirajas', '123', 'Male', 'essakiraja246810@gmail.com', '9345731638', '21ITR012'),
-('Mukdhesh', '12345', 'Male', 'mukhdheshkannapiran@gmail.com', '8489776686', '21ITR037'),
-('praveen', '24', 'Male', 'hqdkjf', 'aflkjw', '23ITR068'),
-('raja', '34', 'Male', 'essakiraja246810@gmail.com', '94653', '21ITR001'),
-('Alsan', '39EAB06D', 'Male', 'mydigitalnepal@gmail.com', '9800998787', ''),
+('essaki', '-', 'Male', 'essakiraja.com', 'asc', ''),
+('essaki', '1', 'Male', 'essakiraja.com', 'asc', ''),
+('essakirajas', '123', 'Male', 'essakiraja.com', '9345738', '21I012'),
+('Mukdhesh', '12345', 'Male', 'mukhdheshn@gmail.com', '8476686', '21IT37'),
+('praveen', '24', 'Male', 'hqdkjf', 'aflkjw', '23R068'),
+('raja', '34', 'Male', 'essakiraja246810@gmail.com', '94653', '2R001'),
+('Alsan', '39EAB06D', 'Male', 'mydigit@gmail.com', '9898787', ''),
 ('joel', '54', 'Male', 'bmj', 'mjh', '21CBR025'),
 ('sdf', '55420520', 'Male', 'as', 'aegsr', 'sadsad'),
 ('b', '554<:52:', 'Male', 'sf', 's', 'sf'),
-('Caroline', '554CA52A', 'Female', 'caroline@gmail.com', '7675777676', '21CSR021'),
+('Caroline', '554CA52A', 'Female', 'caroline@gmail.com', '76757', '21021'),
 ('John', '769174F8', 'Male', 'john@email.com', '23456789', ''),
 ('Thvhm,b', '81A3DC79', 'Female', 'jgkhkkmanjil@gmail.com', '45768767564', ''),
 ('The IoT Projects', '866080F8', 'Male', 'ask.theiotprojects@gmail.com', '9800988978', ''),
 ('essaki', 'h', 'Male', 'm', 'm', 'n'),
-('essaki', 'w', 'Male', 'essakiraja246810@gmail.com', 'asc', ''),
-('essaki', 'z', 'Male', 'essakiraja246810@gmail.com', 'asc', '');
+('essaki', 'w', 'Male', 'essakiraj@gmail.com', 'asc', ''),
+('essaki', 'z', 'Male', 'essakiraj@gmail.com', 'asc', '');
 
 --
 -- Indexes for dumped tables

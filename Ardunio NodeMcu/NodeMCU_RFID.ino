@@ -1,6 +1,5 @@
 /*
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# RFID MFRC522 / RC522 Library : https://github.com/miguelbalboa/rfid # 
 #                                                                     # 
 #                 Installation :                                      # 
 # NodeMCU ESP8266/ESP12E    RFID MFRC522 / RC522                      #
@@ -13,20 +12,14 @@
 #         3V/3V3   <---------->   3.3V                                #
 # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # #
 
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
-# If you are in a good mood, please subscriber Uteh Str YouTube Channel : https://www.youtube.com/channel/UCk8rZ8lhAH4H-75tQ7Ljc1A :) :) :) #
-# # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # # 
 */
 
-//----------------------------------------Include the NodeMCU ESP8266 Library---------------------------------------------------------------------------------------------------------------//
-//----------------------------------------see here: https://www.youtube.com/watch?v=8jMr94B8iN0 to add NodeMCU ESP8266 library and board
 #include <ESP8266WiFi.h>
 #include <ESP8266HTTPClient.h>
 #include <WiFiClient.h>
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 //----------------------------------------Include the SPI and MFRC522 libraries-------------------------------------------------------------------------------------------------------------//
-//----------------------------------------Download the MFRC522 / RC522 library here: https://github.com/miguelbalboa/rfid
 #include <SPI.h>
 #include <MFRC522.h>
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
@@ -38,8 +31,8 @@ MFRC522 mfrc522(SS_PIN, RST_PIN);  //--> Create MFRC522 instance.
 #define ON_Board_LED 2  //--> Defining an On Board LED, used for indicators when the process of connecting to a wifi router
 
 //----------------------------------------SSID and Password of your WiFi router-------------------------------------------------------------------------------------------------------------//
-const char* ssid = "Ideation Lab@5G";
-const char* password = "ideationlab@123";
+const char* ssid = "##############";
+const char* password = "$$$$$$$$$$$$$$";
 //------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------//
 
 int readsuccess;
